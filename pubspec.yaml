@@ -1,0 +1,20 @@
+name: supabase_auth_repo
+description: Dart package which manages the flutter_supabase_auth_repo domain.
+publish_to: none
+
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  supabase_flutter : ^2.9.0
+  google_sign_in: ^6.1.0
+  meta: ^1.8.0
+  equatable: ^2.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.0
+  plugin_platform_interface: ^2.1.7
