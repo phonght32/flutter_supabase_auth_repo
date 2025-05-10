@@ -7,9 +7,12 @@ class SupabaseAuthRepo {
   final _supabase = Supabase.instance.client;
   final String _androidClientId;
   final String _webClientId;
+  final GoogleSignIn _googleSignIn;
 
   SupabaseAuthRepo({required String androidClientId, required String webClientId}) :
-        _androidClientId = androidClientId, _webClientId = webClientId;
+        _androidClientId = androidClientId,
+        _webClientId = webClientId,
+        _googleSignIn = GoogleSignIn(clientId: androidClientId, serverClientId: webClientId);
 
   /// Get the current authenticated user
   SupabaseUser get user {
@@ -65,12 +68,7 @@ class SupabaseAuthRepo {
   /// Sign in using Google authentication
   Future<void> logInWithGoogle() async {
     try {
-      final GoogleSignIn googleSignIn = GoogleSignIn(
-        clientId: _androidClientId,
-        serverClientId: _webClientId,
-      );
-
-      final googleUser = await googleSignIn.signIn();
+      final googleUser = await _googleSignIn.signIn();
       final googleAuth = await googleUser!.authentication;
       final accessToken = googleAuth.accessToken;
       final idToken = googleAuth.idToken;
@@ -100,6 +98,7 @@ class SupabaseAuthRepo {
   /// Sign out the current user
   Future<void> logOut() async {
     try {
+      await _googleSignIn.signOut();
       await _supabase.auth.signOut();
     } catch (e) {
       throw Exception('Logout error: $e');
