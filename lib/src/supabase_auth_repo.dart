@@ -5,13 +5,9 @@ import 'model/supabase_user.dart';
 
 class SupabaseAuthRepo {
   final _supabase = Supabase.instance.client;
-  final String _androidClientId;
-  final String _webClientId;
   final GoogleSignIn _googleSignIn;
 
   SupabaseAuthRepo({required String androidClientId, required String webClientId}) :
-        _androidClientId = androidClientId,
-        _webClientId = webClientId,
         _googleSignIn = GoogleSignIn(clientId: androidClientId, serverClientId: webClientId);
 
   /// Get the current authenticated user
